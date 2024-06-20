@@ -320,7 +320,7 @@
 
                 <h3>Contact</h3>
                 <img src="assets/img/lines.svg" class="img-lines" alt="lines">
-                <form>
+                <form id="contactForm">
                     <div class="row">
                         <div class="col-sm-6">
                             <input type="text" name="name" class="form-control mt-x-0" placeholder="Name" required>
@@ -333,8 +333,7 @@
                                 required></textarea>
                         </div>
                     </div>
-                    <button href="#" class="btn btn-border" type="submit">Hire Me <span
-                            class="glyphicon glyphicon-send"></span></button>
+                    <button class="btn btn-border" type="submit">Send Message</button>
                 </form>
             </div>
         </section><!-- /.section-form -->
@@ -373,6 +372,34 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-progressbar/0.9.0/bootstrap-progressbar.min.js"></script>
     <script src="assets/js/jquery.countTo.min.js"></script>
     <script src="assets/js/script.js"></script>
+
+    <!-- Custom JavaScript for form submission -->
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const name = event.target.name.value;
+            const email = event.target.email.value;
+            const message = event.target.message.value;
+
+            const data = { name, email, message };
+
+            fetch('https://share-jet.vercel.app/v1/portfolio/contact-us', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Message sent successfully!');
+            })
+            .catch((error) => {
+                alert('There was an error sending your message. Please try again later.');
+            });
+        });
+    </script>
 
 </body>
 
